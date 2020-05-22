@@ -8,8 +8,8 @@ using namespace std;
 struct Node {
 	int data;
 	int redBlack;
-	Node* left;
-	Node* right;
+	Node* left = NULL;
+	Node* right = NULL;
 	Node* parent;
 };
 
@@ -483,7 +483,7 @@ void deleteOneChild(Node* node) {
 			deleteCase1(child);
 		}
 	}
-	free(node);
+	delete node;
 }
 			
 void deleteCase1(Node* node) {
@@ -566,7 +566,10 @@ void deleteCase6(Node* node) {
 }
 
 void deleteCases(Node* node, Node* &root) {
-	if (node -> redBlack == RED && !(node -> left) && !(node -> right)) {
+	if (!(node -> left) && !(node -> right)) {
+		if (node -> redBlack == BLACK) {
+			node -> parent -> redBlack = BLACK;
+		}
 		deleteNode(root, node -> data);
 	}
 	else {
